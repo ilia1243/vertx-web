@@ -1,29 +1,21 @@
 name: CI
 on:
-  workflow_call:
-    inputs:
-      branch:
-        required: true
-        type: string
-      jdk:
-        default: 8
-        type: string
-      os:
-        default: ubuntu-latest
-        type: string
+  push:
+    branches:
+      - test
 jobs:
   Test:
     name: Run tests
-    runs-on: ${{ inputs.os }}
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
         with:
-          ref: ${{ inputs.branch }}
+          ref: test
       - name: Install JDK
         uses: actions/setup-java@v2
         with:
-          java-version: ${{ inputs.jdk }}
+          java-version: 11
           distribution: temurin
       - name: Run tests
         run: mvn -s .github/maven-ci-settings.xml clean verify -B

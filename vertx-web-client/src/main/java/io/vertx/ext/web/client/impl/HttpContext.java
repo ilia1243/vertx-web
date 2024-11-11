@@ -444,11 +444,6 @@ public class HttpContext<T> {
           return;
         }
         MultiMap headers = this.request.checkHeaders(requestOptions);
-        MultiMap requestHeaders = this.request.headers();
-        for (String headerName : requestHeaders.names()) {
-          headers.remove(headerName);
-        }
-        headers.addAll(requestHeaders);
         multipartForm.headers().forEach(header -> {
           headers.set(header.getKey(), header.getValue());
         });
